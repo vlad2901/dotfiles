@@ -1,18 +1,18 @@
 set nocompatible                  " Don't allow vim to behave like vi
 set noswapfile                    " Don't create swp files
 set backspace=indent,eol,start    " Usual end
-" set autoindent                    " Auto indentation
-" set smartindent                   " Smart indentation
+set autoindent                    " Auto indentation
+set smartindent                   " Smart indentation
 set ruler                         " Show the cursor position
 set showcmd                       " Show the number of lines selected
 set ignorecase                    " Ignore case in search by default
 set smartcase                     " Upper case letter in search pattern => case sensitive search
 set showmatch                     " Cursor jumps to matching paranthesis when in insert mode
 set bg=dark                       " Enable magical colors
-" set nowrap                        " Don't wrap long lines
-" set selectmode=mouse              " Select code using the mouse
+set nowrap                        " Don't wrap long lines
+set selectmode=mouse              " Select code using the mouse
 set number                        " Enable line numbering
-" set splitright                    " Use vertical splits by default
+set splitright                    " Use vertical splits by default
 set textwidth=80                  " Set maximum line length to 80 characters.
 syntax enable
 
