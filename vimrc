@@ -13,7 +13,10 @@ set nowrap                        " Don't wrap long lines
 set selectmode=mouse              " Select code using the mouse
 set number                        " Enable line numbering
 set splitright                    " Use vertical splits by default
-set textwidth=80                  " Set maximum line length to 80 characters.
+set textwidth=90                  " Set maximum line length to 90 characters.
+set tabstop=2
+set shiftwidth=2
+set expandtab
 syntax enable
 colorscheme desert
 
@@ -37,6 +40,7 @@ Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'kien/ctrlp'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
