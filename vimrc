@@ -1,58 +1,106 @@
-set nocompatible                  " Don't allow vim to behave like vi
-set noswapfile                    " Don't create swp files
-set backspace=indent,eol,start    " Usual end
-set autoindent                    " Auto indentation
-set smartindent                   " Smart indentation
-set ruler                         " Show the cursor position
-set showcmd                       " Show the number of lines selected
-set ignorecase                    " Ignore case in search by default
-set smartcase                     " Upper case letter in search pattern => case sensitive search
-set showmatch                     " Cursor jumps to matching paranthesis when in insert mode
-set bg=dark                       " Enable magical colors
-set nowrap                        " Don't wrap long lines
-set selectmode=mouse              " Select code using the mouse
-set number                        " Enable line numbering
-set splitright                    " Use vertical splits by default
-set textwidth=90                  " Set maximum line length to 90 characters.
+" Leader
+let mapleader = " "
+
+set autowrite     " Automatically :write before running commands
+set backspace=2   " Backspace deletes like most programs in insert mode
+set et            " Expand tabs to spaces
+set ff=unix       " Something about unix
+set history=50
+set incsearch     " do incremental searching
+set laststatus=2  " Always display the status line
+set nobackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set nowritebackup
+" set ruler         " show the cursor position all the time
+set shell=/bin/bash
+set showcmd       " display incomplete commands
+set shiftround    " When at 3 spaces and I hit >>, go to 4, not 5.
+set t_Co=256      " Use more colors
+set colorcolumn=80
+
+set nowrap
+
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+colorscheme night-owl
+
+
+" Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
+set shiftround
 set expandtab
-syntax enable
-colorscheme desert
 
-" Scrolling
-map <C-j> <ESC><C-e> 
-map <C-k> <ESC><C-y>
-" Navigate splits
-map <C-h> <ESC><C-w>h
-map <C-l> <ESC><C-w>l
-" Change split size
-map < <ESC><C-w><
-map > <ESC><C-w>>
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'L9'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'scrooloose/nerdtree'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'kien/ctrlp'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-" 
+" File explorer
+nmap <Leader>r :NvimTreeFocus<cr>R<c-w><c-p>:CtrlPClearCache<cr>
+nnoremap <silent> <Leader>v :NvimTreeFindFile<CR>
+nnoremap <Leader>f :NvimTreeToggle<Enter>
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>h :TestNearest<CR>
+nmap <silent> <leader>g :TestFile<CR>
+nmap <silent> <leader>f :TestSuite<CR>
+
+lua << EOF
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+-- vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+EOF
+
+map <c-p> :FZF<cr>
+map <Leader>f :files<CR>
+map <Leader>a :Ag<CR>
+ 
+set number
+set norelativenumber
+set numberwidth=5
+
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
+
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" oops commands
+command WQ wq                       "meant wq
+command Wq wq                       "meant wq
+command W w                         "meant w
+command Q q                         "meant q
+nnoremap <Leader>\ :vsplit<CR>
+nnoremap <Leader>- :split<CR>
+
+" copy visualy selected text to clip board
+vmap <C-x> :!pbcopy<CR>
+vmap <C-c> :w !pbcopy<CR><CR>
